@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>创意工具箱 · Creative Toolkit</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="logo"><span>🧰</span><span>创意工具箱</span></div>
+      <nav class="tool-list">
+        <div class="tool-item active" data-tool="gradient"><span class="ico">🎨</span>渐变生成器</div>
+        <div class="tool-item" data-tool="palette"><span class="ico">🌈</span>配色方案</div>
+        <div class="tool-item" data-tool="password"><span class="ico">🔐</span>密码生成器</div>
+        <div class="tool-item" data-tool="markdown"><span class="ico">📝</span>Markdown 预览</div>
+        <div class="tool-item" data-tool="pomodoro"><span class="ico">🍅</span>番茄钟</div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <!-- 1. 渐变生成器 -->
+      <section class="panel active" id="panel-gradient">
+        <h1 class="page-title">🎨 渐变背景生成器</h1>
+        <p class="page-desc">选择两个颜色和角度，实时预览并复制 CSS 代码</p>
+        <div class="card">
+          <div class="gradient-preview" id="gradPreview"></div>
+          <div class="grad-controls">
+            <div>
+              <label>起始颜色</label>
+              <input type="color" id="gradC1" value="#7c5cff" />
+            </div>
+            <div>
+              <label>结束颜色</label>
+              <input type="color" id="gradC2" value="#00d4ff" />
+            </div>
+            <div style="grid-column:1/-1">
+              <label>角度：<span id="angleVal">135</span>°</label>
+              <input type="range" id="gradAngle" min="0" max="360" value="135" />
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" id="randomGrad">🎲 随机配色</button>
+            <button class="btn btn-ghost" id="copyGrad">📋 复制 CSS</button>
+          </div>
+          <div class="css-output" id="gradCss">background: linear-gradient(135deg, #7c5cff, #00d4ff);</div>
+        </div>
+      </section>
+
+      <!-- 2. 配色方案 -->
+      <section class="panel" id="panel-palette">
+        <h1 class="page-title">🌈 配色方案生成器</h1>
+        <p class="page-desc">一键生成 5 色和谐配色，点击色块复制 HEX 值</p>
+        <div class="card">
+          <div class="palette" id="palette"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" id="genPalette">🎲 生成新配色</button>
+            <button class="btn btn-ghost" id="copyPalette">📋 复制全部 HEX</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 密码生成器 -->
+      <section class="panel" id="panel-password">
+        <h1 class="page-title">🔐 强密码生成器</h1>
+        <p class="page-desc">自定义长度和字符类型，生成安全随机密码</p>
+        <div class="card">
+          <div class="pwd-display" id="pwdDisplay">点击生成密码</div>
+          <div class="length-row">
+            <span style="color:var(--text-2);font-size:14px">密码长度</span>
+            <input type="range" id="pwdLen" min="6" max="40" value="16" />
+            <span class="length-val" id="lenVal">16</span>
+          </div>
+          <div class="pwd-options">
+            <label class="opt-row"><input type="checkbox" id="optUpper" checked /> 大写字母 A-Z</label>
+            <label class="opt-row"><input type="checkbox" id="optLower" checked /> 小写字母 a-z</label>
+            <label class="opt-row"><input type="checkbox" id="optNum" checked /> 数字 0-9</label>
+            <label class="opt-row"><input type="checkbox" id="optSym" /> 特殊符号 !@#$</label>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" id="genPwd">🎲 生成密码</button>
+            <button class="btn btn-ghost" id="copyPwd">📋 复制</button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill" style="width:0"></div></div>
+        </div>
+      </section>
+
+      <!-- 4. Markdown 预览 -->
+      <section class="panel" id="panel-markdown">
+        <h1 class="page-title">📝 Markdown 实时预览</h1>
+        <p class="page-desc">左侧输入 Markdown，右侧实时渲染预览</p>
+        <div class="md-split">
+          <div class="md-editor">
+            <textarea class="form-control" id="mdInput" placeholder="在此输入 Markdown..."># 欢迎使用 Markdown 预览
+
+这是一个 **加粗** 和 *斜体* 的示例。
+
+## 功能列表
+- 支持标题
+- 支持列表
+- 支持 `代码`
+- 支持 [链接](https://example.com)
+
+> 这是一段引用文字
+
+\`\`\`js
+console.log("Hello World");
+\`\`\`</textarea>
+          </div>
+          <div class="md-preview" id="mdPreview"></div>
+        </div>
+      </section>
+
+      <!-- 5. 番茄钟 -->
+      <section class="panel" id="panel-pomodoro">
+        <h1 class="page-title">🍅 番茄钟计时器</h1>
+        <p class="page-desc">专注工作 25 分钟，休息 5 分钟，循环提升效率</p>
+        <div class="card pomodoro">
+          <div class="timer-modes">
+            <button class="mode-btn active" data-mode="25">专注 25分</button>
+            <button class="mode-btn" data-mode="5">短休 5分</button>
+            <button class="mode-btn" data-mode="15">长休 15分</button>
+          </div>
+          <div class="timer-display" id="timerDisplay">25:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="timerStart">▶ 开始</button>
+            <button class="btn btn-ghost" id="timerReset">↺ 重置</button>
+          </div>
+          <div class="timer-rounds" id="timerRounds">已完成 0 个番茄</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
