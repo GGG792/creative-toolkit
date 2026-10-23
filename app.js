@@ -4,13 +4,14 @@
 
 const $ = (id) => document.getElementById(id);
 
-// ---------- 侧边栏切换 ----------
-document.querySelectorAll(".tool-item").forEach((item) => {
+// ---------- 底部 Tab 切换 ----------
+document.querySelectorAll(".tab-item").forEach((item) => {
   item.addEventListener("click", () => {
-    document.querySelectorAll(".tool-item").forEach((x) => x.classList.remove("active"));
+    document.querySelectorAll(".tab-item").forEach((x) => x.classList.remove("active"));
     document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
     item.classList.add("active");
     $("panel-" + item.dataset.tool).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
